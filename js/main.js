@@ -4,8 +4,10 @@ const app = {
             criadas: 0,
             concluidas: 0,
             exibeErro: false,
+            exibeErroEdicao: false,
             tarefas: window.tarefas,
-            novaTarefa: {}
+            novaTarefa: {},
+            editaTarefa: {}
         };
     },
     methods: {
@@ -31,7 +33,8 @@ const app = {
                 this.tarefas.push({
                     id: this.tarefas.length + 1,
                     titulo: this.novaTarefa.titulo,
-                    status: false
+                    status: false,
+                    edit: false
                 });
                 this.limpar();
                 this.setErro(false);
@@ -42,6 +45,24 @@ const app = {
         apagar: function(tarefa){
             if(confirm('Deseja apagar esta tarefa?')){
                 this.tarefas.splice(this.getIndex(tarefa), 1);
+            }
+        },
+        editar: function(tarefa){
+            tarefa.edit = true;
+            this.editaTarefa.titulo = tarefa.titulo;
+        },
+        cancelarEdicao: function(tarefa){
+            tarefa.edit = false;
+            tarefa.exibeErroEdicao = false;
+        },
+        atualizar: function(tarefa){
+            if(this.editaTarefa.titulo){
+                tarefa.edit = false;
+                tarefa.titulo = this.editaTarefa.titulo;
+                this.editaTarefa = {};
+                tarefa.exibeErroEdicao = false;
+            } else {
+                tarefa.exibeErroEdicao = true;
             }
         },
         limpar: function(){
