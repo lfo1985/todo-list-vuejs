@@ -28,13 +28,20 @@ const app = {
         barraProgresso: function(){
             return this.tarefas.length > 0 ? parseInt((this.totalConcluidas() / this.tarefas.length) * 100) : 0;
         },
+        statusBotoes: function(status){
+            this.tarefas.forEach(item => {
+                item.disabled = status;
+            });
+        },
         adicionar: function(){
             if(this.novaTarefa.titulo){
                 this.tarefas.push({
                     id: this.tarefas.length + 1,
                     titulo: this.novaTarefa.titulo,
                     status: false,
-                    edit: false
+                    edit: false,
+                    disabled: false,
+                    focus: true
                 });
                 this.limpar();
                 this.setErro(false);
@@ -48,12 +55,16 @@ const app = {
             }
         },
         editar: function(tarefa){
+            this.statusBotoes(true);
             tarefa.edit = true;
+            tarefa.focus = true;
             this.editaTarefa.titulo = tarefa.titulo;
         },
         cancelarEdicao: function(tarefa){
             tarefa.edit = false;
             tarefa.exibeErroEdicao = false;
+            this.statusBotoes(false);
+            this.editaTarefa = {};
         },
         atualizar: function(tarefa){
             if(this.editaTarefa.titulo){
@@ -61,7 +72,10 @@ const app = {
                 tarefa.titulo = this.editaTarefa.titulo;
                 this.editaTarefa = {};
                 tarefa.exibeErroEdicao = false;
+                tarefa.focus = false;
+                this.statusBotoes(false);
             } else {
+                tarefa.focus = true;
                 tarefa.exibeErroEdicao = true;
             }
         },
@@ -74,4 +88,33 @@ const app = {
     }
 };
 
-Vue.createApp(app).mount('#root');
+var appVue = Vue.createApp(app);
+
+appVue.directive('focus', (el, binding) => {
+    if(binding.value == true){
+        el.focus();
+    }
+});
+
+// appVue.directive('focus', {
+//     mounted(el, binding) {
+//         if(binding.value == true){
+//             el.focus();
+//         }
+//     },
+// });
+
+// appVue.directive('focus-in', {
+//     updated(el, binding) {
+//         if(binding.value == true){
+//             el.focus();
+//         }
+//     },
+//     created(el, binding) {
+//         if(binding.value == true){
+//             el.focus();
+//         }
+//     },
+// });
+
+appVue.mount('#root');

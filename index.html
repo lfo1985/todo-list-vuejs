@@ -85,7 +85,12 @@
                     </div>
                     <template v-if="tarefa.edit">
                         <div class="d-flex align-items-center me-3 w-100">
-                            <input type="text" class="form-control me-3" v-model="editaTarefa.titulo">
+                            <input 
+                                type="text" 
+                                class="form-control me-3"  
+                                v-model="editaTarefa.titulo"
+                                v-focus="tarefa.focus"
+                            >
                             <button @click="atualizar(tarefa)" class="btn btn-success me-3">
                                 <span class="fa fa-check"></span>
                             </button>
@@ -99,12 +104,14 @@
                             <button
                                 @click="editar(tarefa)" 
                                 class="btn btn-info me-3"
+                                :disabled="tarefa.disabled"
                             >
                                 <span class="fa fa-edit"></span>
                             </button>
                             <button 
                                 @click="apagar(tarefa)"
                                 class="btn btn-danger"
+                                :disabled="tarefa.disabled"
                             >
                                 <span class="fa fa-x"></span>
                             </button>
@@ -131,6 +138,7 @@
                         placeholder="Digite o título da tarefa!" 
                         aria-label="Digite o título da tarefa!"
                         v-model="novaTarefa.titulo"
+                        v-focus="!novaTarefa.titulo && !editaTarefa.titulo ? true : false"
                     >
                 </div>
                 <div class="col-sm-12 mt-3">
