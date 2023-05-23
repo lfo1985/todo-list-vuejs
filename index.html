@@ -57,6 +57,9 @@
                 </div>
             </div>
         </h5>
+        <button @click="limparTodos" v-if="tarefas.length > 0" class="btn btn-warning text-white mb-3">
+            Apagar todas as tarefas
+        </button>
         <ul v-if="tarefas.length > 0" class="list-group">
             <!-- Item da lista -->
             <li v-for="tarefa in tarefas" class="list-group-item">
@@ -117,7 +120,7 @@
                         type="button"
                         class="btn btn-danger"
                         @click="limpar"
-                    >Limpar</button>
+                    >Limpar Campo</button>
                 </div>
             </div>
         </form>

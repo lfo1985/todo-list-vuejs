@@ -46,6 +46,9 @@ const app = {
         },
         limpar: function(){
             this.novaTarefa = {};
+        },
+        limparTodos: function(){
+            this.tarefas = [];
         }
     }
 };
