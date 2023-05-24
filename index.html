@@ -33,34 +33,43 @@
     <main id="root" class="container-fluid w-75">
         <h5 class="border-bottom pb-2 mb-3">
             <div class="row d-flex align-items-center">
-                <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="col-sm-12 col-md-12 col-lg-9">
                     <i class="fa-solid fa-calendar-check"></i>
-                    Tarefas agendadas - 22/05/2023
+                    Tarefas
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 bg-light p-2 mt-sm-3">
+                <div class="col-sm-12 col-md-12 col-lg-3 bg-light border rounded p-2 mt-sm-3">
                     <div class="w-100 d-inline-block p-1 text-center" style="font-size: 12pt;">
-                        {{ tarefas.length }} criadas e {{ totalConcluidas() }} concluídas
+                        {{ tarefas.length }} criadas e {{ getTotalConcluidas() }} concluídas
                     </div>
                     <div class="progress">
                         <div 
                             class="progress-bar" 
                             role="progressbar" 
                             aria-label="Progresso das atividades do dia" 
-                            :style="{ width: barraProgresso() + '%' }" 
-                            aria-valuenow="{{ barraProgresso() }}" 
+                            :style="{ width: getBarraProgresso() + '%' }" 
+                            aria-valuenow="{{ getBarraProgresso() }}" 
                             aria-valuemin="0" 
                             aria-valuemax="100"
-                        >{{ barraProgresso() }}%</div>
+                        >{{ getBarraProgresso() }}%</div>
                     </div>
                 </div>
             </div>
         </h5>
-        <button @click="limparTodos" v-if="tarefas.length > 0" class="btn btn-warning text-white mb-3">
+        <button 
+            @click="apagarTodasTarefas" 
+            v-if="tarefas.length > 0" 
+            class="btn btn-dark text-white mb-3"
+        >
+            <span class="fa fa-trash me-1"></span>
             Apagar todas as tarefas
         </button>
         <ul v-if="tarefas.length > 0" class="list-group">
             <!-- Item da lista -->
-            <li v-for="tarefa in tarefas" class="list-group-item">
+            <li 
+                v-for="tarefa in tarefas" 
+                class="list-group-item"
+                :class="tarefa.status ? 'borda-tarefa-concluida' : 'borda-tarefa-andamento'"
+            >
                 <div v-if="tarefa.exibeErroEdicao" class="text-danger mb-3">
                     <i class="fa fa-warning"></i>
                     Informe o título para realizar a edição!
@@ -70,8 +79,9 @@
                         <input 
                             class="form-check-input" 
                             type="checkbox"
-                            :id="'tarefa-'+tarefa.id" 
                             v-model="tarefa.status"
+                            :id="'tarefa-'+tarefa.id"
+                            @change="setDadosLocalStorage"
                         >
                         <label 
                             class="form-check-label" 
@@ -91,10 +101,10 @@
                                 v-model="editaTarefa.titulo"
                                 v-focus="tarefa.focus"
                             >
-                            <button @click="atualizar(tarefa)" class="btn btn-success me-3">
+                            <button @click="atualizar(tarefa)" class="btn btn-sm btn-success me-3">
                                 <span class="fa fa-check"></span>
                             </button>
-                            <button @click="cancelarEdicao(tarefa)" class="btn btn-danger text-white">
+                            <button @click="cancelarEdicao(tarefa)" class="btn btn-sm btn-danger text-white">
                                 Cancelar
                             </button>
                         </div>
@@ -103,17 +113,17 @@
                         <div class="d-flex align-items-center">
                             <button
                                 @click="editar(tarefa)" 
-                                class="btn btn-info me-3"
+                                class="btn btn-sm btn-primary me-1"
                                 :disabled="tarefa.disabled"
                             >
                                 <span class="fa fa-edit"></span>
                             </button>
                             <button 
                                 @click="apagar(tarefa)"
-                                class="btn btn-danger"
+                                class="btn btn-sm btn-danger"
                                 :disabled="tarefa.disabled"
                             >
-                                <span class="fa fa-x"></span>
+                                <span class="fa fa-trash-o"></span>
                             </button>
                         </div>
                     </template>
@@ -143,14 +153,12 @@
                 <div class="col-sm-12 mt-3">
                     <button
                         type="button"
-                        class="btn btn-info text-light me-2"
+                        class="btn btn-outline-primary me-2"
                         @click="adicionar"
-                    >Criar</button>
-                    <button
-                        type="button"
-                        class="btn btn-danger"
-                        @click="limpar"
-                    >Limpar Campo</button>
+                    >
+                        <span class="fa fa-plus me-1"></span>
+                        Criar
+                    </button>
                 </div>
             </div>
         </form>
@@ -159,7 +167,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/e88f7da791.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@next"></script>
-    <script src="js/data.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>

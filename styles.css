@@ -4,3 +4,9 @@
 .oculta-alerta {
     display: none;
 }
+.borda-tarefa-concluida {
+    border-left: 10px solid #0d6efd;
+}
+.borda-tarefa-andamento {
+    border-left: 10px solid black;
+}
