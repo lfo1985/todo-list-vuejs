@@ -10,3 +10,15 @@
 .borda-tarefa-andamento {
     border-left: 10px solid black;
 }
+
+@media (max-width: 992px){
+    #root {
+        width: 100%!important;
+    }
+}
+
+@media (max-width: 576px){
+    #caixa-progress-bar {
+        margin-top: 1rem!important;
+    }
+}

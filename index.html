@@ -33,11 +33,11 @@
     <main id="root" class="container-fluid w-75">
         <h5 class="border-bottom pb-2 mb-3">
             <div class="row d-flex align-items-center">
-                <div class="col-sm-12 col-md-12 col-lg-9">
+                <div class="col-sm-12 col-md-12 col-lg-8">
                     <i class="fa-solid fa-calendar-check"></i>
                     Tarefas
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-3 bg-light border rounded p-2 mt-sm-3">
+                <div id="caixa-progress-bar" class="col-xs-3 col-md-12 col-lg-4 bg-light border rounded p-2 mt-sm-3">
                     <div class="w-100 d-inline-block p-1 text-center" style="font-size: 12pt;">
                         {{ tarefas.length }} criadas e {{ getTotalConcluidas() }} concluídas
                     </div>
