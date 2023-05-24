@@ -1,3 +1,3 @@
 # @TODO List
 
-Aplicação de estudo criado utilizando a framework VueJS.
+Aplicação desenvolvida para estudo da framework VueJS.
